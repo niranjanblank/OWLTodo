@@ -1,10 +1,15 @@
 import { Component, xml } from "@odoo/owl";
+import { useStore } from "../store";
 
 export class Task extends Component {
-    static props = ['task', 'onDelete']
+    static props = ['task']
+
+    setup(){
+        this.store = useStore()
+    }
     
     deleteTask(){
-        this.props.onDelete(this.props.task)
+        this.store.deleteTask(this.props.task)
     }
 
     static template = xml`
@@ -20,7 +25,7 @@ export class Task extends Component {
     `
 
     toggleTask(){
-        this.props.task.isCompleted = !this.props.task.isCompleted
+        this.store.toggleTask(this.props.task)
     }
 
 }
