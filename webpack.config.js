@@ -42,7 +42,7 @@ module.exports = (env, argv) => {
       compress: true,
       hot: true,
       host,
-      port: 3000,
+      port: 5000,
     },
     plugins: [
       new HtmlWebpackPlugin({
