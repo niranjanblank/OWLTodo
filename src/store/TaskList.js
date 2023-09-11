@@ -1,6 +1,11 @@
 export class TaskList {
-    nextId = 1;
-    tasks = [];
+
+    constructor(tasks){
+        this.tasks = tasks || []
+        const taskIds = this.tasks.map((t) => t.id)
+        this.nextId = taskIds.length? Math.max(...taskIds) + 1: 1;
+    }
+
 
     addTask(text){
         text = text.trim()

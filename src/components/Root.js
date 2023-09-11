@@ -8,6 +8,20 @@ export class Root extends Component {
     const inputRef = useRef("add-input")
     onMounted(()=> inputRef.el.focus())
     this.store = useStore()
+    this.filter = useState({value: "all"})
+  }
+
+  get displayedTasks() {
+    const tasks = this.store.tasks
+    switch (this.filter.value){
+      case "active": return tasks.filter(t => !t.isCompleted)
+      case "completed": return tasks.filter(t => t.isCompleted)
+      case "all": return tasks
+    }
+  }
+
+  setFilter(filter){
+    this.filter.value = filter
   }
   
 
@@ -29,9 +43,25 @@ export class Root extends Component {
     t-ref="add-input"
     class="rounded-lg border-solid text-gray-800 border-green-400 w-1/2 p-4"
     placeholder="Enter a new task" t-on-keyup="addTask"/>
-    <t t-foreach="this.store.tasks" t-as="task" t-key="task.id">
+    <t t-foreach="displayedTasks" t-as="task" t-key="task.id">
         <Task task="task" />
     </t>
+    <div t-if="store.tasks.length">
+        <div>
+          <t t-esc="displayedTasks.length"/>
+          <t t-if="displayedTasks.length lt store.tasks.length">
+            / <t t-esc="store.tasks.length"/>
+          </t>
+        </div>
+        <!-- filters -->
+        <div class="flex gap-2">
+          <span t-foreach="['all','active','completed']"
+          t-as="f" t-key="f"
+          t-on-click ="() => this.setFilter(f)"
+          t-esc="f"
+          />
+        </div>
+    </div>
   
     </div>`;
 
