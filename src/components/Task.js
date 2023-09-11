@@ -13,14 +13,16 @@ export class Task extends Component {
     }
 
     static template = xml`
-    <div class="rounded-xl my-2 py-2 px-5 w-1/2 bg-slate-800"
+    <div class="rounded-xl my-2 py-2 px-5 w-1/2 bg-slate-800 flex justify-between "
     t-att-class="props.task.isCompleted ? 'bg-green-400':''"
     >
         <t t-esc="props.task.text"/>
+        <div>
         <input type="checkbox" t-att-checked="props.task.isCompleted" t-on-click="toggleTask" />
-        <span class="p-1 bg-red-500 rounded-lg"
+        <span class="p-1 bg-red-500 rounded-lg ml-2"
         t-on-click="deleteTask"
         >Delete</span>
+        </div>
     </div>
     `
 
